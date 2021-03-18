@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="bibliotec">
+    <meta name="author" content="Karol Stropek">
+    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/pricing/">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <!-- Custom styles-->
+    <link href="static/pricing.css" rel="stylesheet">
+
+    {% if title %}
+        <title>bibliotec - {{ title }}</title>
+    {% else %}
+        <title>bibliotec</title>
+    {% endif %}
+
+    <link rel="stylesheet" type="text/css" href="static/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap&subset=latin-ext" rel="stylesheet"
+          type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap&subset=latin-ext" rel="stylesheet"
+          type="text/css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm align-items-center p-3 px-md-4 mb-3 bg-light border-bottom box-shadow fixed-top">
+      <h5 class="navbar-brand my-0 md-auto font-weight-normal">bibliotec</h5>
+      <ul class="navbar-nav ms-auto my-2 my-md-0 md-3">
+        <a class="p-2 text-dark" href="{{ url_for('main.home') }}">Home</a>
+        <a class="p-2 text-dark" href="{{ url_for('main.catalogue') }}">Katalog</a>
+        <a class="p-2 text-dark" href="{{ url_for('main.new_item') }}">Dodaj pozycję</a>
+        <a class="p-2 text-dark" href="{{ url_for('main.import_book') }}">Importuj książkę</a>
+      </ul>
+    </nav>
+    <div class="container min-vh-100 mt-5">
+        {% block content %}{% endblock %}
+    </div>
+    <footer class="pt-4 pt-md-5 bg-light border-top box-shadow">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-6 col-md text-center">
+                    <a class="text-dark" href="{{ url_for('main.home') }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+                        <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+                        </svg>
+                    </a>
+                    <small class="d-block mb-3 text-muted">&copy; 2021</small>
+                </div>
+                <div class="col-6 col-md text-center">
+                    <h5>
+                        <a class="text-dark" href="{{ url_for('main.catalogue') }}">Katalog</a>
+                    </h5>
+                </div>
+                <div class="col-6 col-md text-center">
+                    <h5>Partner</h5>
+                    <ul class="list-unstyled text-small">
+<!--                        <li><a class="text-muted" href="https://www.morele.net/" target="_blank">morele.net</a></li>-->
+<!--                        <li><a class="text-muted" href="https://www.x-kom.pl/" target="_blank">X-kom</a></li>-->
+                        <li><a class="text-muted" href="https://books.google.pl/" target="_blank">Google books</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+</body>
+</html>

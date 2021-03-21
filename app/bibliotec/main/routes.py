@@ -1,11 +1,10 @@
 import json
-import os
 
 from urllib.request import urlopen
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 
 from bibliotec.db.handler import *
-from .forms import AddForm
+from .forms import AddForm, EditForm
 from .helpers import *
 
 main = Blueprint('main', __name__)
@@ -153,3 +152,53 @@ def import_book():
         return render_template('import.html', title='Importuj książkę')
 
     return render_template('import.html', title='Importuj książkę')
+
+
+@main.route("/edit", methods=['GET', 'POST'])
+def edit():
+    if request.method == 'POST':
+        identifier = request.form['identifier']
+        book = find_book(identifier)
+
+        if book:
+            return redirect(url_for('main.edit_book', identifier=identifier))
+        else:
+            flash('Książka nie występuje w katalogu lub błędny identyfikator', 'danger')
+
+            return render_template('edit.html', title='Znajdź pozycję')
+
+    return render_template('edit.html', title='Znajdź pozycję')
+
+
+@main.route("/editbook?<identifier>", methods=['GET', 'POST'])
+def edit_book(identifier):
+    form = EditForm()
+    book = find_book(identifier)
+    book_id = str(book.get('_id'))
+
+    if form.validate_on_submit():
+        title = form.title.data
+        authors = authors_list_manual(form.authors.data)
+        published_date = form.published_date.data
+        page_count = form.page_count.data
+
+        if form.image.data:
+            image_link = form.image.data
+        else:
+            image_link = url_for('static', filename='no_foto.jpg')
+
+        language = form.language.data
+
+        update = update_book(book_id, title, authors, published_date, page_count, image_link, language)
+
+        flash('Pomyślnie zaktualizowano dane', 'success')
+
+        return redirect(url_for('main.home'))
+
+    form.title.data = book['title']
+    form.authors.data = ', '.join(book['authors'])
+    form.published_date.data = book['publishedDate']
+    form.page_count.data = book['pageCount']
+    form.language.data = book['language']
+
+    return render_template('edit_book.html', title='Znajdź pozycję', form=form, book=book)

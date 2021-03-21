@@ -1,0 +1,128 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h1 class="display-4">Edytuj pozycję w katalogu</h1>
+    </div>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <div class="w-100">
+            <div class="text-center mt-2 mb-2 lead">
+                {{ form.title.label }}
+            </div>
+            {% if form.title.errors %}
+                <div class="form-control-lg is-invalid text-center">
+                    {{ form.title }}
+                </div>
+                <div class="invalid-feedback text-center">
+                    {% for error in form.title.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="form-control-lg text-center">
+                    {{ form.title }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="w-100">
+            <div class="text-center mt-2 mb-2 lead">
+                {{ form.authors.label }}
+            </div>
+            {% if form.authors.errors %}
+                <div class="form-control-lg is-invalid text-center">
+                    {{ form.authors }}
+                </div>
+                <div class="invalid-feedback text-center">
+                    {% for error in form.authors.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="form-control-lg text-center">
+                    {{ form.authors }}
+                    <p><small>{{ form.authors.description }}</small></p>
+                </div>
+            {% endif %}
+        </div>
+        <div class="w-100">
+            <div class="text-center mt-2 mb-2 lead">
+                {{ form.published_date.label }}
+            </div>
+            {% if form.published_date.errors %}
+                <div class="form-control-lg is-invalid text-center">
+                    {{ form.published_date }}
+                </div>
+                <div class="invalid-feedback text-center">
+                    {% for error in form.published_date.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="form-control-lg text-center">
+                    {{ form.published_date }}
+                    <p><small>{{ form.published_date.description }}</small></p>
+                </div>
+            {% endif %}
+        </div>
+        <div class="w-100">
+            <div class="text-center mt-2 mb-2 lead">
+                {{ form.page_count.label }}
+            </div>
+            {% if form.page_count.errors %}
+                <div class="form-control-lg is-invalid text-center">
+                    {{ form.page_count }}
+                </div>
+                <div class="invalid-feedback text-center">
+                    {% for error in form.page_count.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="form-control-lg text-center">
+                    {{ form.page_count }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="w-100">
+            <div class="text-center mt-2 mb-2 lead">
+                {{ form.image.label }}
+            </div>
+            {% if form.image.errors %}
+                <div class="form-control-lg is-invalid text-center">
+                    {{ form.image }}
+                </div>
+                <div class="invalid-feedback text-center">
+                    {% for error in form.image.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="form-control-lg text-center">
+                    {{ form.image }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="w-100">
+            <div class="text-center mt-2 mb-2 lead">
+                {{ form.language.label }}
+            </div>
+            {% if form.language.errors %}
+                <div class="form-control-lg is-invalid text-center">
+                    {{ form.language }}
+                </div>
+                <div class="invalid-feedback text-center">
+                    {% for error in form.language.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="form-control-lg text-center">
+                    {{ form.language }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="text-center mt-3 mb-5 me-auto">
+            {{ form.submit }}
+        </div>
+    </form>
+{% endblock content %}

@@ -1,3 +1,5 @@
+from bson.objectid import ObjectId
+
 from pymongo import MongoClient
 
 client = MongoClient('mongodb+srv://guest:guest-password@database.pjbt9.mongodb.net/bibliotec?retryWrites=true&w=majority')
@@ -34,3 +36,24 @@ def import_to_col(title, authors, published_date, identifiers, page_count, image
 def check_if_exist(isbn):
     book = col.find_one({"identifiers": {'$elemMatch': {'identifier': {'$regex': isbn.data}}}})
     return book
+
+
+def find_book(identifier):
+    book = col.find_one({"identifiers": {'$elemMatch': {'identifier': identifier}}})
+    return book
+
+
+def update_book(book_id, title, authors, published_date, page_count, image_link, language):
+    update = col.update_one(
+        {"_id": ObjectId(book_id)},
+        {"$set": {
+            'title': title,
+            'title_lower': title.lower(),
+            'authors': authors,
+            'publishedDate': published_date,
+            'pageCount': page_count,
+            'image': image_link,
+            'language': language
+        }}
+    )
+    return update

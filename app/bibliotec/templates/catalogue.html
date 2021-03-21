@@ -1,15 +1,59 @@
 {% extends "layout.html" %}
 {% block content %}
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-        <h1 class="display-4">Search</h1>
-        <p class="lead">Enter product you are searching for:</p>
+        <h1 class="display-4">Katalog książek</h1>
+        <p class="lead">Przeszukaj katalog</p>
     </div>
-    <form action="/home" method="post">
-        <div class="form-group">
-            <input type="search" class="form-control rounded text-center" placeholder="Search" aria-label="Search" aria-describedby="search-addon" name="product">
+    <form action="" method="post">
+        <div class="form-group mb-3">
+            <p class="text-center">Tytuł</p>
+            <input type="search" class="form-control rounded text-center" aria-label="Search" aria-describedby="search-addon" name="title">
+        </div>
+        <div class="form-group mb-3">
+            <p class="text-center">Autor</p>
+            <input type="search" class="form-control rounded text-center" aria-label="Search" aria-describedby="search-addon" name="author">
+        </div>
+        <div class="form-group mb-3">
+            <p class="text-center">Język publikacji</p>
+            <input type="search" class="form-control rounded text-center" aria-label="Search" aria-describedby="search-addon" name="language">
+        </div>
+        <div class="form-group mb-3">
+            <p class="text-center">Najwcześniejsza data publikacji</p>
+            <input type="date" class="form-control rounded text-center" aria-label="Search" aria-describedby="search-addon" name="date_min">
+        </div>
+        <div class="form-group mb-3">
+            <p class="text-center">Najpóźniejsza data publikacji</p>
+            <input type="date" class="form-control rounded text-center" aria-label="Search" aria-describedby="search-addon" name="date_max">
         </div>
         <div class="text-center">
-            <button type="submit" name="submit" value="submit" class="btn btn-secondary mt-3 me-auto">Give me the best price !</button>
+            <button type="submit" name="submit" value="submit" class="btn btn-secondary mt-3 me-auto">Szukaj</button>
         </div>
     </form>
+    <div class="card-deck mt-5 mb-3 text-center">
+        {% for book in books %}
+            <div class="card mt-3 mb-2 box-shadow">
+                <div class="card-header">
+                    {% for isbn in book.identifiers %}
+                        <h5 class="my-0 font-weight-normal">{{ isbn.type }}: {{ isbn.identifier }}</h5>
+                    {% endfor %}
+                </div>
+                <div class="card-body">
+                    {% for author in book.authors %}
+                        <h4 class="card-title pricing-card-title">{{ author }}</h4>
+                    {% endfor %}
+                    <h1 class="card-title pricing-card-title">{{ book.title }}</h1>
+                    <div class="row">
+                        <div class="col-sm">
+                            <img src="{{ book.image }}" class="img-thumbnail mt-3 mb-4">
+                        </div>
+                        <div class="col-sm">
+                            <h6>Data wydania: {{ book.publishedDate }}</h6>
+                            <h6>Liczba stron: {{ book.pageCount }}</h6>
+                            <h6>Język publikacji: {{ book.language }}</h6>
+                        </div>
+                    </div>
+                </div>
+              </div>
+        {% endfor %}
+    </div>
 {% endblock content %}

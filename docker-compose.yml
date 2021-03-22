@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  bibliotec:
+    container_name: bibliotec
+    image: bibliotec:latest
+    build: .
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - "SECRET_KEY=$SECRET_KEY"
+      - "DB_USER=$DB_USER"
+      - "DB_PWD=$DB_PWD"
+      - "DB_HOST=$DB_HOST"
+      - "DB_NAME=$DB_NAME"

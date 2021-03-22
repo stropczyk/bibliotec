@@ -1,9 +1,16 @@
+import os
+
 from bson.objectid import ObjectId
 
 from pymongo import MongoClient
 
-client = MongoClient('mongodb+srv://guest:guest-password@database.pjbt9.mongodb.net/bibliotec?retryWrites=true&w=majority')
-db = client['bibliotec']
+db_user = os.getenv('DB_USER')
+db_pwd = os.getenv('DB_PWD')
+db_host = os.getenv('DB_HOST')
+db_name = os.getenv('DB_NAME')
+
+client = MongoClient(f'mongodb+srv://{db_user}:{db_pwd}@{db_host}/{db_name}?retryWrites=true&w=majority')
+db = client[db_name]
 col = db['books']
 
 
@@ -57,3 +64,8 @@ def update_book(book_id, title, authors, published_date, page_count, image_link,
         }}
     )
     return update
+
+
+def find_books(params):
+    books = col.find(params)
+    return books

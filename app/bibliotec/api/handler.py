@@ -6,7 +6,7 @@ from flask_restful import Resource
 from bibliotec.db.handler import *
 from .helpers import *
 
-BASE_URL = "http://0.0.0.0:5000/books/v1/volumes"
+BASE_URL = "http://bibliotec.pl/books/v1/volumes"
 
 
 class BooksInquiry(Resource):

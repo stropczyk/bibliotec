@@ -1,6 +1,7 @@
 import json
 
 from urllib.request import urlopen
+from urllib.parse import quote
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 
 from bibliotec.db.handler import *
@@ -84,40 +85,41 @@ def new_item():
 def import_book():
     if request.method == 'POST':
         api_uri = f'https://www.googleapis.com/books/v1/volumes?q='
+        inquiry = ''
 
         if request.form['title']:
             title = request.form['title']
             title = prepare_inquiry(title)
-            api_uri += f'+intitle:{title}'
+            inquiry += f'+intitle:{title}'
 
         if request.form['author']:
             author = request.form['author']
             author = prepare_inquiry(author)
-            api_uri += f'+inauthor:{author}'
+            inquiry += f'+inauthor:{author}'
 
         if request.form['publisher']:
             publisher = request.form['publisher']
             publisher = prepare_inquiry(publisher)
-            api_uri += f'+inpublisher:{publisher}'
+            inquiry += f'+inpublisher:{publisher}'
 
         if request.form['subject']:
             subject = request.form['subject']
             subject = prepare_inquiry(subject)
-            api_uri += f'+subject:{subject}'
+            inquiry += f'+subject:{subject}'
 
         if request.form['isbn']:
             isbn = request.form['isbn']
-            api_uri += f'+isbn:{isbn}'
+            inquiry += f'+isbn:{isbn}'
 
         if request.form['lccn']:
             lccn = request.form['lccn']
-            api_uri += f'+lccn:{lccn}'
+            inquiry += f'+lccn:{lccn}'
 
         if request.form['oclc']:
             oclc = request.form['oclc']
-            api_uri += f'+oclc:{oclc}'
+            inquiry += f'+oclc:{oclc}'
 
-        response = urlopen(api_uri)
+        response = urlopen(api_uri + quote(inquiry))
         data = json.load(response)
 
         if data['totalItems'] == 0:
@@ -136,6 +138,11 @@ def import_book():
 
             published_date = book_info.get('publishedDate', 'b.d.')
             identifiers = book_info.get('industryIdentifiers', [{'type': 'ISBN', 'identifier': 'b.d.'}])
+
+            book_exists = check_if_exists_import(identifiers)
+            if book_exists:
+                continue
+
             page_count = book_info.get('pageCount', 'b.d.')
             language = book_info.get('language', 'b.d.')
 

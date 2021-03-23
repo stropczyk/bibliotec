@@ -69,3 +69,8 @@ def update_book(book_id, title, authors, published_date, page_count, image_link,
 def find_books(params):
     books = col.find(params)
     return books
+
+
+def check_if_exists_import(identifiers):
+    book = col.find_one({"identifiers": identifiers})
+    return book
